@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class App {
     public static int[][] cosmonauts = {
@@ -65,6 +66,7 @@ public class App {
         while (true) {
             // Zmienna dla maksymalnej ilosci zapelnienia zer
             int maxZeroToOne = 0;
+            HashMap<Integer, Integer> aggregatedCosmonauts = new HashMap<>();
 
             for (int i = 0; i < cosmonauts.length; i++) {
                 
@@ -75,13 +77,14 @@ public class App {
                     }
                 }
                 
-                // PODEJSCIE 1 
+                // PODEJSCIE 2.1 
                 // Sprawdz najmniejsza ilosc 0 w tempSkills, dla kazdego kosmonauty, zapisz jego indeks jesli 
                 // int[] tempSkills = {};
                 // int[] currentCosmonautSkillSet = cosmonauts[i];
 
-                // PODEJSCE 2
-                // Zapisz indeksy w nowej tablicy gdzie w skills sa wartosci 0;
+                // PODEJSCE 2.2
+                // Zapisz indeksy w nowej tablicy gdzie w skills sa wartosci 0
+                // tl;dr - tablica z indeksami gdzie skill == 0;
                 ArrayList<Integer> whereIsZeros = new ArrayList<>();
                 
                 for (int k = 0; k < skills.length; k++) {
@@ -91,6 +94,9 @@ public class App {
                 }
                 
                 // Sprawdz ile cosmonauta[i] zapelni zer (te ktore sa na potrzebnych miejscach)
+                // w sumie to by pasowalo sprawdzic ile kazdy z osobna zapelni zer na potrzebnych miejscach, po prostu ich zaagregowac i wybrac najlepszego
+
+                // Ten kawałek kodu sprawdza nam ILE cosmonauta[i] zapelnia potrzebnych umiejetnosci swoimi umiejetnosciami
                 int tempCounter = 0;
                 // Wchodzimy w petle sprawdzajaca kazdy pojedynczy skill cosmonauty[i]
                 for (int j = 0; j < cosmonauts[i].length; j++) {
@@ -98,6 +104,7 @@ public class App {
                     if (cosmonauts[i][j] == 1) {
                         // Sprawdz czy ten skill jest na liscie whereIsZero
                         for (Integer zeroSkillIndexInteger : whereIsZeros) {
+                            // Jesli skill cosmonauty[i] jest na zerSkillIndexInteger zwiekszam tempCounter
                             if (zeroSkillIndexInteger == j) {
                                 tempCounter += 1;
                             }
@@ -105,11 +112,22 @@ public class App {
                     }
                 }
 
+                aggregatedCosmonauts.put(i, tempCounter);
+
+                // Musimy zaagregowac wszystkich dostepnych kosmonautow wzgledem tego ile zapelnili umiejetnosci swoimi umiejetnosciami.
+                // - musimy to robic przed petlą dla 'i', tzn tam zapisywac 
+
+
+
+                // W tym if'ie musimy wybrac najlepszego z nich wszystkich i dodac go do cosmonautsSquadu.
                 if (tempCounter > maxZeroToOne) {
                     // ZAPISZ TEGO CO PRZEBIL maxZeroToOne
+                    // ale jesli zapisze tego co przebil maxZeroToOne to wezme tak narpawde nie najlepszego ale pierwszego ktory to zrobil
+                    // czyli musze wziac tak naprawde goscia z najwieksza iloscia skill pointow 
                     // jest on pod indeksem 'i' (zapisz go w liscie cosmonautsSquadArrayList)
                     cosmonautsSquadArrayList.add(i);
                     // Nastepnie zapisz biezacy skillset z nim
+                    // TUTAJ WYSTEPUJE JAKIS PROBLEM, PRZEANALIZUJ GO.
                     System.out.println("Wzialem k" + i);
                     for (int j = 0; j < cosmonauts[i].length; j++) {
                         if (cosmonauts[i][j] == 1) {
@@ -122,9 +140,9 @@ public class App {
                 // Zapisz pierwszego lepszego ze jest najlepszy.
                 // w petli sprawdzaj ile zer uzupelnia sposrod tych ktore sa na indeksach brakujacych
                 
-                // ABY UNIKNAC NIESKONCZNEJ PETLI KONIECZNIE ZAPISZ SKILLS GDY ZNAJDZIESZ JUZ NAJLEPSZEG KANDYDATA
-                
             }
+
+            // Przed zaczeciem nowej iteracji z nowymi zapelnienionymi skillami, sprawdz ich zaagregowanych i wybierz najlepszego i zaaktualizuj skillsy
 
             // Wykonuj petle dopoki kazdy bool w tablicy skills nie bedzie 1;
             if (skills != targetSkills) {
