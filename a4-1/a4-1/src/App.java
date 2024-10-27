@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public class App {
     public static int[][] cosmonauts = {
@@ -17,7 +19,7 @@ public class App {
         int[] skills = {0, 0, 0, 0, 0, 0};
         int[] targetSkills = {1, 1, 1, 1, 1, 1};
 
-        // Najpierw znajdziemy tego kosmonaute (indeks na ktorym jest w danychKosmonautow) ktory ma najwiecej umiejetnosci.
+        // Najpierw znajdziemy tego kosmonaute (indeks na ktorym jest w cosmonauts) ktory ma najwiecej umiejetnosci.
         int theBestFirstCosmonautSkillCount = 0;
         int[] firstBestCosmonaut = {};
         int firstBestCosmonautIndex = 0;
@@ -31,43 +33,43 @@ public class App {
                 sumOfSkills += j;
             }
             
-            // W tym przypadku wybierzemy ostatniego najlepszego kosmonaute.
+            // W tym przypadku (>=) wybierzemy ostatniego najlepszego kosmonaute.
             if (sumOfSkills >= theBestFirstCosmonautSkillCount) {
                 theBestFirstCosmonautSkillCount = sumOfSkills;    
                 firstBestCosmonautIndex = index;
                 firstBestCosmonaut = i;
-                // Usuwamy poniewaz dodalibysmy wszystkie przypdaki 'najlepszych' a nam chodzi poki co o wziecie tylko pierwszego
+                // Usuwamy wczesniejsych, poniewaz bez tego dodalibysmy wszystkie przypdaki 'najlepszych' a nam chodzi poki co o wziecie tylko pierwszego
                 cosmonautsSquadArrayList.clear();
                 cosmonautsSquadArrayList.add(index);
             }
 
-            System.out.println("koniec " + sumOfSkills);
             index++;
         }
+
         System.out.println("Zaczne od kosmonauty: k" + (firstBestCosmonautIndex + 1) + " "  + firstBestCosmonaut + " " + theBestFirstCosmonautSkillCount + " " );
 
-        // podejscie pierwsze
-        // Teraz pasuje wyrzucic kosmonaute kx z przeszukiwanych do nastepnych.
-        
-        // Sprawdz jakie umiejetnosci sa puste (na ktorych indeksach)
-
-        // Majac puste umiejetnosci sprawdz po kolei kazdego kosmonaute czy akurat jest taki 
-
-        // Majac tablice kosmonautow nalezy przeiterowac przez nia w celu 
-
-
-
-        // podejscie drugie
-        // wyrzuc kosmonaute (wyrzuce go poprzez to ze nie bede uwzglednial go w iterowaniu przy porownywaniu )
-
-        // Aktualizujemy liste umiejetnosci naszych kosmonautow
+        // Aktualizujemy liste umiejetnosci naszych kosmonautow (po tym jak wybralismy najlepszego z nich)
         skills = firstBestCosmonaut;
+
         // Sprawdzamy kazdego kosmite z ktorym bedzie najmniej zer!!!
-        while (true) {
-            // Zmienna dla maksymalnej ilosci zapelnienia zer
-            int maxZeroToOne = 0;
+        // Analogia tej petli jest taka:
+        boolean continueWhile = true;
+        while (continueWhile) {
+            // HashMapa {'kosmonauta': 'ilość zapełnionych zer dla danej załogi'}
             HashMap<Integer, Integer> aggregatedCosmonauts = new HashMap<>();
 
+            // Zapisuje sobie indeksy gdzie są zera w aktualnej tablicy Skillów
+            ArrayList<Integer> whereIsZeros = new ArrayList<>();
+                
+            for (int k = 0; k < skills.length; k++) {
+                if (skills[k] == 0) {
+                    whereIsZeros.add(k);
+                }
+            }
+
+            // Teraz sprawdzam każdego kosmonaute z którym będzie najmniej 0, Właściwie to agreguję wszystkich kosmonautów,
+            // sprawdzam ile zapełnią zer w 'skills', 
+            // po wykonanej pętli wybiorę najlepszych i dodam ich umiejetnosci do 'skills' oraz dodam ich do arrayListCosmonautsSquad
             for (int i = 0; i < cosmonauts.length; i++) {
                 
                 // Gdy aktualny kosmonauta bedzie rowny z tym ktory jest juz w zalodze, wtedy go nie bierzemy pod uwage.
@@ -77,30 +79,11 @@ public class App {
                     }
                 }
                 
-                // PODEJSCIE 2.1 
-                // Sprawdz najmniejsza ilosc 0 w tempSkills, dla kazdego kosmonauty, zapisz jego indeks jesli 
-                // int[] tempSkills = {};
-                // int[] currentCosmonautSkillSet = cosmonauts[i];
-
-                // PODEJSCE 2.2
-                // Zapisz indeksy w nowej tablicy gdzie w skills sa wartosci 0
-                // tl;dr - tablica z indeksami gdzie skill == 0;
-                ArrayList<Integer> whereIsZeros = new ArrayList<>();
-                
-                for (int k = 0; k < skills.length; k++) {
-                    if (skills[k] == 0) {
-                        whereIsZeros.add(k);
-                    }
-                }
-                
-                // Sprawdz ile cosmonauta[i] zapelni zer (te ktore sa na potrzebnych miejscach)
-                // w sumie to by pasowalo sprawdzic ile kazdy z osobna zapelni zer na potrzebnych miejscach, po prostu ich zaagregowac i wybrac najlepszego
-
                 // Ten kawałek kodu sprawdza nam ILE cosmonauta[i] zapelnia potrzebnych umiejetnosci swoimi umiejetnosciami
                 int tempCounter = 0;
                 // Wchodzimy w petle sprawdzajaca kazdy pojedynczy skill cosmonauty[i]
                 for (int j = 0; j < cosmonauts[i].length; j++) {
-                    // Sprawdz czy pojedynczy skill jest jedynka
+                    // Sprawdz czy pojedynczy skill jest jedynką
                     if (cosmonauts[i][j] == 1) {
                         // Sprawdz czy ten skill jest na liscie whereIsZero
                         for (Integer zeroSkillIndexInteger : whereIsZeros) {
@@ -111,45 +94,45 @@ public class App {
                         }
                     }
                 }
-
+                
+                // Dodaje kosmonaute do zaagregowanej listy, w ktorej mamy wszystkich kosmonautow i ich ilosc zapelnien 0 w biezacym skillsecie.
                 aggregatedCosmonauts.put(i, tempCounter);
-
-                // Musimy zaagregowac wszystkich dostepnych kosmonautow wzgledem tego ile zapelnili umiejetnosci swoimi umiejetnosciami.
-                // - musimy to robic przed petlą dla 'i', tzn tam zapisywac 
-
-
-
-                // W tym if'ie musimy wybrac najlepszego z nich wszystkich i dodac go do cosmonautsSquadu.
-                if (tempCounter > maxZeroToOne) {
-                    // ZAPISZ TEGO CO PRZEBIL maxZeroToOne
-                    // ale jesli zapisze tego co przebil maxZeroToOne to wezme tak narpawde nie najlepszego ale pierwszego ktory to zrobil
-                    // czyli musze wziac tak naprawde goscia z najwieksza iloscia skill pointow 
-                    // jest on pod indeksem 'i' (zapisz go w liscie cosmonautsSquadArrayList)
-                    cosmonautsSquadArrayList.add(i);
-                    // Nastepnie zapisz biezacy skillset z nim
-                    // TUTAJ WYSTEPUJE JAKIS PROBLEM, PRZEANALIZUJ GO.
-                    System.out.println("Wzialem k" + i);
-                    for (int j = 0; j < cosmonauts[i].length; j++) {
-                        if (cosmonauts[i][j] == 1) {
-                            skills[j] = 1;
-                        }
-                    }
-                    maxZeroToOne = tempCounter;
-                }
-
-                // Zapisz pierwszego lepszego ze jest najlepszy.
-                // w petli sprawdzaj ile zer uzupelnia sposrod tych ktore sa na indeksach brakujacych
                 
             }
 
-            // Przed zaczeciem nowej iteracji z nowymi zapelnienionymi skillami, sprawdz ich zaagregowanych i wybierz najlepszego i zaaktualizuj skillsy
+            // Przed zaczeciem nowej iteracji (ktora wykona sie z petli while) z nowymi zapelnienionymi skillami, sprawdz ich zaagregowanych i wybierz najlepszego i zaaktualizuj skillsy
+            System.out.println(aggregatedCosmonauts);
+            
+            // Sprawdzamy ktory kosmonauta w tej 'turze' petli while byl najlepszy dla danego skillseta
+            int tempCounter = 0;
+            int bestCosmonautIndex = 0;
+            for (Map.Entry<Integer, Integer> entry : aggregatedCosmonauts.entrySet()) {
+                if (entry.getValue() > tempCounter) {
+                    tempCounter = entry.getValue();
+                    bestCosmonautIndex = entry.getKey();
+                }
+            }
+
+            // Zmien skillset biezacej zalogi i dodaj go do cosmonautsSquad arraylist.
+            for (int k = 0; k < cosmonauts[bestCosmonautIndex].length; k++) {
+                if (cosmonauts[bestCosmonautIndex][k] == 1) {
+                    skills[k] = 1;
+                }
+            }
+
+            // Dodaje wybranego w tej turze kosmonaute do arraylisty
+            cosmonautsSquadArrayList.add(bestCosmonautIndex);
 
             // Wykonuj petle dopoki kazdy bool w tablicy skills nie bedzie 1;
-            if (skills != targetSkills) {
+            if (!Arrays.equals(skills, targetSkills)) {
                 continue;
             } else {
-                System.out.println(skills + " job is done." +  cosmonautsSquadArrayList);
-                break;
+                System.out.println("Wybralem kosmonautow: ");
+                for (Integer cosmonautsIndex : cosmonautsSquadArrayList) {
+                    System.out.println("k" + (cosmonautsIndex + 1));
+                }
+                // Wylacz petle while
+                continueWhile = false;
             }
         }
 
