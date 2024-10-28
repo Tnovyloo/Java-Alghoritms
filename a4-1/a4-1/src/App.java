@@ -52,7 +52,6 @@ public class App {
         skills = firstBestCosmonaut;
 
         // Sprawdzamy kazdego kosmite z ktorym bedzie najmniej zer!!!
-        // Analogia tej petli jest taka:
         boolean continueWhile = true;
         while (continueWhile) {
             // HashMapa {'kosmonauta': 'ilość zapełnionych zer dla danej załogi'}
