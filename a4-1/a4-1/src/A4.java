@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class App {
+public class A4 {
     public static int[][] cosmonauts = {
         //       A  B  C  D  E  F
                 {1, 0, 0, 0, 1, 0}, // k1
@@ -33,7 +33,7 @@ public class App {
                 sumOfSkills += j;
             }
             
-            // W tym przypadku (>=) wybierzemy ostatniego najlepszego kosmonaute.
+            // W tym przypadku '>=' wybierzemy ostatniego najlepszego kosmonaute.
             if (sumOfSkills >= theBestFirstCosmonautSkillCount) {
                 theBestFirstCosmonautSkillCount = sumOfSkills;    
                 firstBestCosmonautIndex = index;
@@ -46,7 +46,7 @@ public class App {
             index++;
         }
 
-        System.out.println("Zaczne od kosmonauty: k" + (firstBestCosmonautIndex + 1) + " "  + firstBestCosmonaut + " " + theBestFirstCosmonautSkillCount + " " );
+        System.out.println("Zaczne od kosmonauty: k" + (firstBestCosmonautIndex + 1) + " "  + firstBestCosmonaut + " - ilość jego umiejętności" + theBestFirstCosmonautSkillCount + " " );
 
         // Aktualizujemy liste umiejetnosci naszych kosmonautow (po tym jak wybralismy najlepszego z nich)
         skills = firstBestCosmonaut;

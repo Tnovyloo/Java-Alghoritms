@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class App {
+public class A28 {
     static final int[] NOMINALS = {500, 200, 100, 50, 20, 10, 5, 2, 1};
     static final int[] LIMITS = {1, 2, 0, 7, 2, 2, 5, 2, 10};
 
