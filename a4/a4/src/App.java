@@ -155,9 +155,6 @@ public class App {
                     
                 }
             }
-            // if (diffrenceSet.size() == 0) {
-
-            // }
 
         }
 

@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class A4 {
+public class A4AZ {
     public static int[][] cosmonauts = {
         //       A  B  C  D  E  F
                 {1, 0, 0, 0, 1, 0}, // k1
