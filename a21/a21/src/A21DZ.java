@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class App {
+public class A21DZ {
 
     static double polandGDP = 6000;
     static double polandIncrease = 1.06;

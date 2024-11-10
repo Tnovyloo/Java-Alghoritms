@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Random;
 
-public class Routes {
+public class A19MC {
     private static final Map<Integer, String> CITIES = new HashMap<>();
 
     static {

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class App {
+public class A1BF {
     static int[] i = {0, 1, 2, 3, 4, 5};
     static int[] v = {6, 2, 3, 2, 3, 1};
     static int[] w = {6, 4, 5, 7, 10, 2};
