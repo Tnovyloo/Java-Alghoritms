@@ -73,6 +73,7 @@ public class OrderedLinkedList<T extends Comparable<T>> {
         list.insert(new Person("Chorąży", 25));
         list.insert(new Person("Karolina", 20));
         list.insert(new Person("Tytus", 30));
+        list.insert(new Person("Alicja", 29));
 
         System.out.println(list);
     }
