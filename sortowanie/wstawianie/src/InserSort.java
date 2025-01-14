@@ -1,11 +1,11 @@
 import java.util.Arrays;
 
 public class InserSort {
-    public static void insertSort(int[] arr) {
 
+    public static int[] insertSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
-            int value = arr[i];
             int position = i;
+            int value = arr[i];
 
             while (position > 0 && arr[position - 1] > value) {
                 arr[position] = arr[position - 1];
@@ -15,7 +15,7 @@ public class InserSort {
             arr[position] = value;
         }
 
-        System.out.println(Arrays.toString(arr));
+        return arr;
     }
 
     public static void main(String[] args) {
